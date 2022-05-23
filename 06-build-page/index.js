@@ -16,7 +16,7 @@ async function buildHTML(templatePath, componentsPath) {
         template.on('end', async () => {
             const components = await readdir(componentsPath, { withFileTypes: true })
             components.forEach(component => {
-                const componentData = fs.createWriteStream(path.join(componentsPath, component.name), 'utf-8')
+                const componentData = fs.createReadStream(path.join(componentsPath, component.name), 'utf-8')
                 const name = path.basename(path.join(componentsPath, component.name), '.html');
 
                 let componentContent = ''
@@ -53,7 +53,7 @@ async function copyDir(folderPath, folderCopyPath) {
     }
 }
 
-async function mergeStyles(distPath, stylePath) {
+async function mergeStyles() {
     try {
         const styles = await readdir(stylePath, { withFileTypes: true });
         const output = fs.createWriteStream(path.join(distPath, 'bundle.css'));
@@ -69,12 +69,12 @@ async function mergeStyles(distPath, stylePath) {
     }
 }
 
-async function buildPage(distPath, stylePath, templatePath, assetsPath, componentsPath) {
+async function buildPage(distPath, templatePath, assetsPath, componentsPath) {
     try {
         await rm(distPath, { recursive: true, force: true })
         await mkdir(distPath, { recursive: true, force: true })
         buildHTML(templatePath, componentsPath)
-        mergeStyles(distPath, stylePath)
+        mergeStyles()
         copyDir(assetsPath, path.join(distPath, 'assets'))
 
     } catch (e) {
@@ -82,4 +82,4 @@ async function buildPage(distPath, stylePath, templatePath, assetsPath, componen
     }
 }
 
-buildPage(distPath, stylePath, templatePath, assetsPath, componentsPath);
+buildPage(distPath, templatePath, assetsPath, componentsPath);

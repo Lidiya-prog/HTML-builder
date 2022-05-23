@@ -14,7 +14,7 @@ async function checkFiles() {
                         console.error(err)
                     } else {
                         const pathToFile = path.join(pathToSecret, file.name);
-                        console.log(`${path.parse(pathToFile).name} - ${path.extname(pathToFile).slice(1)} - ${stat.size}`);
+                        console.log(`${path.parse(pathToFile).name} - ${path.extname(pathToFile).slice(1)} - ${stat.size}b`);
                     }
 
                 })

@@ -5,7 +5,7 @@ const fs = require('fs');
 const distPath = path.join(__dirname, 'project-dist');
 const stylePath = path.join(__dirname, 'styles');
 
-async function mergeStyles(distPath, stylePath){
+async function mergeStyles(){
     try{
         const styles = await readdir(stylePath,  {withFileTypes: true});
         const output = fs.createWriteStream(path.join(distPath, 'bundle.css'));
@@ -21,4 +21,4 @@ async function mergeStyles(distPath, stylePath){
     }
 }
 
-mergeStyles(distPath, stylePath);
+mergeStyles();
